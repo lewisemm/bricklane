@@ -39,3 +39,13 @@ class TestPaymentProcessor(unittest.TestCase):
 
         result = self.payment_processor.verify_payments([payment1, payment2, payment3])
         self.assertEqual(result, [payment1, payment3])
+
+    def test_get_bank_payments(self):
+        fixture = get_path("bank_payments_mixed.csv")
+
+        payments = self.payment_processor.get_payments(fixture, "bank")
+        self.assertEqual(len(payments), 2)
+        self.assertEqual(payments[0].bank.bank_account_id, 20)
+        self.assertEqual(payments[0].source, "bank")
+        self.assertEqual(payments[1].bank.bank_account_id, 60)
+        self.assertEqual(payments[1].source, "bank")

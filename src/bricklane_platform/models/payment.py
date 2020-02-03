@@ -37,7 +37,7 @@ class Payment(object):
             self.card = card
         elif self.source.lower() == "bank":
             bank = Bank()
-            bank.bank_account_id = data["bank_account_id"]
+            bank.bank_account_id = int(data["bank_account_id"])
             bank.processed = True
             self.bank = bank
 
