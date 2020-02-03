@@ -1,5 +1,5 @@
-from abc import ABCMeta, ab
+from abc import ABCMeta
 
 class PaymentMethod(object):
-    _metaclass_ = ABCMeta
+    __metaclass__ = ABCMeta
 
