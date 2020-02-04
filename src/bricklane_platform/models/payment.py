@@ -1,9 +1,7 @@
 from decimal import Decimal
 from dateutil.parser import parse
 
-
-from bricklane_platform.models.card import Card
-from bricklane_platform.models.bank import Bank
+from bricklane_platform.models.details import PaymentDetails
 from bricklane_platform.config import PAYMENT_FEE_RATE
 
 
@@ -30,19 +28,7 @@ class Payment(object):
         self.fee = total_amount * PAYMENT_FEE_RATE
         self.amount = total_amount - self.fee
 
-        if self.source.lower() == "card":
-            card = Card()
-            card.card_id = int(data["card_id"])
-            card.status = data["card_status"]
-            self.card = card
-        elif self.source.lower() == "bank":
-            bank = Bank()
-            bank.bank_account_id = int(data["bank_account_id"])
-            bank.processed = True
-            self.bank = bank
+        self.payment_details = PaymentDetails(source, data)
 
     def is_successful(self):
-        if self.source.lower() == "card":
-            return self.card.status == "processed"
-        elif self.source.lower() == "bank":
-            return self.bank.processed
+        return self.payment_details.status == "processed"
