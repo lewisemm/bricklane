@@ -22,9 +22,9 @@ class TestPaymentProcessor(unittest.TestCase):
 
         payments = self.payment_processor.get_payments(fixture, "card")
         self.assertEqual(len(payments), 3)
-        self.assertEqual(payments[0].card.card_id, 30)
-        self.assertEqual(payments[1].card.card_id, 45)
-        self.assertEqual(payments[2].card.card_id, 10)
+        self.assertEqual(payments[0].payment_details.card_id, 30)
+        self.assertEqual(payments[1].payment_details.card_id, 45)
+        self.assertEqual(payments[2].payment_details.card_id, 10)
 
     def test_get_payments_empty(self):
         fixture = get_path("card_payments_empty.csv")
@@ -45,7 +45,7 @@ class TestPaymentProcessor(unittest.TestCase):
 
         payments = self.payment_processor.get_payments(fixture, "bank")
         self.assertEqual(len(payments), 2)
-        self.assertEqual(payments[0].bank.bank_account_id, 20)
+        self.assertEqual(payments[0].payment_details.bank_account_id, 20)
         self.assertEqual(payments[0].source, "bank")
-        self.assertEqual(payments[1].bank.bank_account_id, 60)
+        self.assertEqual(payments[1].payment_details.bank_account_id, 60)
         self.assertEqual(payments[1].source, "bank")
